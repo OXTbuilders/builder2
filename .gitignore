@@ -1,0 +1,49 @@
+# Ignore everything
+/*
+
+# Un-ignore the directories that contain useful files
+# Note: we just want to add the paths, not the contents,
+#  so for each directory we un-ignore, we re-ignore its contents
+!/etc
+/etc/*
+!/etc/default
+/etc/default/*
+!/etc/lxc
+/etc/lxc/*
+!/etc/apache2
+/etc/apache2/*
+!/var
+/var/*
+!/var/lib
+/var/lib/*
+!/var/lib/buildbot
+/var/lib/buildbot/*
+!/var/lib/buildbot/masters
+/var/lib/buildbot/masters/*
+!/var/lib/buildbot/slaves
+/var/lib/buildbot/slaves/*
+!/home
+/home/*
+!/home/build
+/home/build/*
+!/home/build/openxt
+/home/build/openxt/*
+
+# Un-ignore the files/directories we want
+!/.gitignore
+!/etc/hosts
+!/etc/default/*
+!/etc/lxc/*
+!/etc/apache2/*
+!/var/lib/buildbot/masters/*
+!/var/lib/buildbot/slaves/*
+!/home/build/openxt/*
+
+# Re-ignore the files/directories we don't want
+*~
+*.log
+*.pid
+*sqlite*
+/var/lib/buildbot/masters/buildmaster/.htpasswd
+/var/lib/buildbot/masters/buildmaster/gitpoller-workdir/
+/var/lib/buildbot/masters/buildmaster/openxt/

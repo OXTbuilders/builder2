@@ -1,0 +1,11 @@
+127.0.0.1	localhost
+
+192.168.0.10    builder1
+192.168.0.20    builder2
+192.168.0.30    legacy1
+192.168.0.40    legacy2
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
