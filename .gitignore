@@ -26,8 +26,8 @@
 /home/*
 !/home/build
 /home/build/*
-!/home/build/openxt
-/home/build/openxt/*
+!/home/build/openxt-custom
+/home/build/openxt-custom/*
 
 # Un-ignore the files/directories we want
 !/.gitignore
@@ -37,7 +37,7 @@
 !/etc/apache2/*
 !/var/lib/buildbot/masters/*
 !/var/lib/buildbot/slaves/*
-!/home/build/openxt/*
+!/home/build/openxt-custom/*
 
 # Re-ignore the files/directories we don't want
 *~
