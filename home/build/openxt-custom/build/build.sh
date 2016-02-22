@@ -37,13 +37,45 @@ SUBNET_PREFIX="192.168"
 
 # -- End of script configuration settings.
 
-umask 0022
+BUILDID=$1
+BRANCH=$2
+LAYERS=$3
+OVERRIDES=$4
+ISSUE=$5
 
 BUILD_USER="$(whoami)"
 BUILD_USER_ID="$(id -u ${BUILD_USER})"
 BUILD_USER_HOME="$(eval echo ~${BUILD_USER})"
 IP_C=$(( 150 + ${BUILD_USER_ID} % 100 ))
 ALL_BUILDS_SUBDIR_NAME="xt-builds"
+
+umask 0022
+
+do_overrides () {
+    for trip in $OVERRIDES; do
+        name=$(echo $trip | cut -f 1 -d ':')
+        git=$(echo $trip | cut -f 2 -d ':')
+        branch=$(echo $trip | cut -f 3 -d ':')
+
+        rm -rf /home/git/${BUILD_USER}/$name.git
+        git clone --mirror git://$git/$name /home/git/${BUILD_USER}/$name.git
+        # The following code will name the override $BRANCH, to match what we're building
+        if [[ $branch != "${BRANCH}" ]]; then
+            pushd /home/git/${BUILD_USER}/$name.git
+            # Avoid being on a releavant branch by moving the HEAD to a tmp branch
+            git branch tmp
+            git symbolic-ref HEAD refs/heads/tmp
+            # Move $BRANCH to a backup location (avoid removing it, since some branches can't be removed)
+            #   Do not fail if the branch doesn't exist, it can happen
+            git branch -m $BRANCH original$BRANCH || true
+            # Create a branch named $BRANCH out of the $branch requested by the override
+            git branch $BRANCH $branch
+            # Make $BRANCH the head of the repository
+            git symbolic-ref HEAD refs/heads/$BRANCH
+            popd
+        fi
+    done
+}
 
 # Determine the intended build directory
 ALL_BUILDS_DIRECTORY="${BUILD_USER_HOME}/${ALL_BUILDS_SUBDIR_NAME}"
@@ -78,6 +110,21 @@ for i in /home/git/${BUILD_USER}/*.git; do
     git log -1 --pretty='tformat:%H'
     cd - > /dev/null
 done | tee /tmp/git_heads_$BUILD_USER
+
+# Handle overrides
+#   Note: It is against policy to set both $ISSUE and $OVERRIDES in the buildbot ui
+if [[ $ISSUE != 'None' && $OVERRIDES != 'None' ]]; then
+    echo "Cannot pass both a Jira ticket and custom repository overrides to build from."
+    exit -1
+elif [[ $ISSUE != 'None' && $OVERRIDES == 'None' ]]; then
+    OVERRIDES=$( ./build_for_issue.sh $ISSUE )
+else
+    echo "Building using method other than Jira ticket."
+fi
+OFS=$IFS
+IFS=','
+[ $OVERRIDES != "None" ] && do_overrides
+IFS=$OFS
 
 # Start the git service if needed
 ps -p `cat /tmp/openxt_git.pid 2>/dev/null` >/dev/null 2>&1 || {
@@ -133,6 +180,7 @@ build_container() {
             -e "s|\%BUILD_DIR\%|${BUILD_DIR}|" \
             -e "s|\%SUBNET_PREFIX\%|${SUBNET_PREFIX}|" \
             -e "s|\%IP_C\%|${IP_C}|" \
+            -e "s|\%LAYERS\%|${LAYERS}|" \
             -e "s|\%ALL_BUILDS_SUBDIR_NAME\%|${ALL_BUILDS_SUBDIR_NAME}|" |\
         ssh -t -t -i "${BUILD_USER_HOME}"/ssh-key/openxt \
             -oStrictHostKeyChecking=no build@${CONTAINER_IP}
