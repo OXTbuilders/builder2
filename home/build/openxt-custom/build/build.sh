@@ -193,3 +193,6 @@ build_container() {
 build_container "01" "oe"
 build_container "02" "debian"
 build_container "03" "centos"
+
+rsync -a $BUILD_DIR_PATH builds@158.69.227.117:/home/builds/builds/${BRANCH}
+rm -rf $BUILD_DIR_PATH
