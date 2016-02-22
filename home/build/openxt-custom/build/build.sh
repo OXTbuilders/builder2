@@ -102,14 +102,13 @@ if ! mkdir -p "${BUILD_DIR_PATH}" ; then
     exit 1
 fi
 
-# Fetch git mirrors
-for i in /home/git/${BUILD_USER}/*.git; do
-    echo -n "Fetching `basename $i`: "
-    cd $i
-    git fetch --all > /dev/null 2>&1
-    git log -1 --pretty='tformat:%H'
-    cd - > /dev/null
-done | tee /tmp/git_heads_$BUILD_USER
+# Reset git mirrors to stock, to revert overrides
+mkdir git.old
+mv /home/git/${BUILD_USER}/*.git git.old
+for repo in `ls git.old`; do
+    git clone --mirror git://github.com/openxt/$repo /home/git/${BUILD_USER}/$repo
+done
+rm -rf git.old
 
 # Handle overrides
 #   Note: It is against policy to set both $ISSUE and $OVERRIDES in the buildbot ui
@@ -125,6 +124,13 @@ OFS=$IFS
 IFS=','
 [ $OVERRIDES != "None" ] && do_overrides
 IFS=$OFS
+
+# Now list the HEADS
+for i in /home/git/${BUILD_USER}/*.git; do
+    cd $i
+    git log -1 --pretty='tformat:%H'
+    cd - > /dev/null
+done | tee /tmp/git_heads_$BUILD_USER
 
 # Start the git service if needed
 ps -p `cat /tmp/openxt_git.pid 2>/dev/null` >/dev/null 2>&1 || {
