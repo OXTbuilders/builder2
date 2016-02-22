@@ -187,6 +187,7 @@ build_container() {
             -e "s|\%BUILD_DIR\%|${BUILD_DIR}|" \
             -e "s|\%SUBNET_PREFIX\%|${SUBNET_PREFIX}|" \
             -e "s|\%IP_C\%|${IP_C}|" \
+            -e "s|\%BUILDID\%|${BUILDID}|" \
             -e "s|\%BRANCH\%|${BRANCH}|" \
             -e "s|\%LAYERS\%|${LAYERS}|" \
             -e "s|\%ALL_BUILDS_SUBDIR_NAME\%|${ALL_BUILDS_SUBDIR_NAME}|" |\

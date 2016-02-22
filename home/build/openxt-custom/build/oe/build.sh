@@ -27,6 +27,7 @@ BUILD_DIR=%BUILD_DIR%
 IP_C=%IP_C%
 SUBNET_PREFIX=%SUBNET_PREFIX%
 ALL_BUILDS_SUBDIR_NAME=%ALL_BUILDS_SUBDIR_NAME%
+BUILDID=%BUILDID%
 BRANCH=%BRANCH%
 LAYERS=%LAYERS%
 
@@ -68,7 +69,7 @@ if [[ $LAYERS != 'None' ]]; then
     IFS=$OIFS
 fi
 
-./do_build.sh | tee build.log
+./do_build.sh -i $BUILDID | tee build.log
 
 # Copy the build output
 scp -r build-output/* "${BUILD_USER}@${SUBNET_PREFIX}.${IP_C}.1:${ALL_BUILDS_SUBDIR_NAME}/${BUILD_DIR}/"
