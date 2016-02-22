@@ -12,6 +12,16 @@
 /etc/lxc/*
 !/etc/apache2
 /etc/apache2/*
+!/usr
+/usr/*
+!/usr/lib
+/usr/lib/*
+!/usr/lib/python2.7
+/usr/lib/python2.7/*
+!/usr/lib/python2.7/dist-packages
+/usr/lib/python2.7/dist-packages/*
+!/usr/lib/python2.7/dist-packages/buildbot
+/usr/lib/python2.7/dist-packages/buildbot/*
 !/var
 /var/*
 !/var/lib
@@ -35,6 +45,7 @@
 !/etc/default/*
 !/etc/lxc/*
 !/etc/apache2/*
+!/usr/lib/python2.7/dist-packages/buildbot/*
 !/var/lib/buildbot/masters/*
 !/var/lib/buildbot/slaves/*
 !/home/build/openxt-custom/*
@@ -44,6 +55,7 @@
 *.log
 *.pid
 *sqlite*
+/usr/lib/python2.7/dist-packages/buildbot/test
 /var/lib/buildbot/masters/buildmaster/.htpasswd
 /var/lib/buildbot/masters/buildmaster/gitpoller-workdir/
 /var/lib/buildbot/masters/buildmaster/openxt/
