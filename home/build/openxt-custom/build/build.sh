@@ -79,19 +79,14 @@ do_overrides () {
 
 # Determine the intended build directory
 ALL_BUILDS_DIRECTORY="${BUILD_USER_HOME}/${ALL_BUILDS_SUBDIR_NAME}"
-if [ -z $1 ] ; then
-    BUILD_DIR_PREFIX=$(date +%y%m%d)
-
+BUILD_DIR_PREFIX=$(date +%y%m%d)
 #FIXME: the sorting in this isnt quite correct:
-    COUNTER=$(/bin/ls -1d "${ALL_BUILDS_DIRECTORY}/${BUILD_DIR_PREFIX}"-* \
-                      2>/dev/null | \
-              sort -nr | \
-              sed -e 's/^.*-//' -n  -e 1p)
-    COUNTER=$((COUNTER + 1))
-    BUILD_DIR="${BUILD_DIR_PREFIX}-${COUNTER}"
-else
-    BUILD_DIR="$1"
-fi
+COUNTER=$(/bin/ls -1d "${ALL_BUILDS_DIRECTORY}/${BUILD_DIR_PREFIX}"-* \
+                  2>/dev/null | \
+		 sort -nr | \
+		 sed -e 's/^.*-//' -n  -e 1p)
+COUNTER=$((COUNTER + 1))
+BUILD_DIR="${BUILD_DIR_PREFIX}-${COUNTER}"
 
 BUILD_DIR_PATH="${ALL_BUILDS_DIRECTORY}/${BUILD_DIR}"
 if [ -e "$BUILD_DIR_PATH" ] ; then
