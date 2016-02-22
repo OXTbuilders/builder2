@@ -45,6 +45,9 @@ from twisted.web.util import redirectTo
 from zope.interface import Interface
 
 
+repos = ['blktap', 'bootage', 'dm-agent', 'dm-wrapper', 'fbtap', 'gene3fs', 'icbinn', 'idl', 'input', 'installer', 'ioemu', 'libedid', 'libpciemu', 'libxcdbus', 'libxenbackend', 'manager', 'meta-selinux',       'msi-installer', 'network', 'ocaml', 'openxt', 'polmod-example', 'pv-linux-drivers', 'qemu-dm', 'resized', 'sdk', 'seabios', 'selinux-policy', 'surfman', 'sync-cli', 'sync-client', 'sync-database', 'sync-       server', 'sync-ui-helper', 'sync-wui', 'toolstack', 'toolstack-data', 'uid', 'v4v', 'win-tools', 'xblanker', 'xclibs', 'xctools', 'xc-vusb', 'xc-vusb-daemon', 'xc-windows', 'xenaccess', 'xenclient-oe',          'xenclient-oe-extra', 'xenfb2', 'xsm-policy']
+
+
 class ITopBox(Interface):
 
     """I represent a box in the top row of the waterfall display: the one
@@ -85,7 +88,6 @@ css_classes = {SUCCESS: "success",
                RETRY: "retry",
                None: "",
                }
-
 
 def getAndCheckProperties(req):
     """

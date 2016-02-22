@@ -281,7 +281,7 @@ class BuildStep(object, properties.PropertiesMixin):
         # the correct description
         self._step_status.setText(self.describe(False))
         self._step_status.stepStarted()
-
+        self.build.build_status.build_output = str(self.build.builder.config.builddir)+'/build/output/build-%s'%self.build.build_status.number
         try:
             # set up locks
             yield self.acquireLocks()

@@ -173,6 +173,37 @@
         push the 'Force Build' button</p>
   {% endif %}
   <input type='hidden' name='forcescheduler' value='{{sch.name}}' />
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var x = 1;
+            var wrapper = $(".input_fields");
+            var add_button = $(".add_field_button");
+            var num_layers = $("#num_layers");
+
+            $(add_button).click(function(ele) {
+                ele.preventDefault();
+                $(wrapper).append('<div>Layer Name:<input type="text" name="layer'+x+'"/> Layer Repository:<input type="text" name="lrepo'+x+'"/>Layer Branch:<input type="text" name="lbranch'+x+'"/><a href="#" class="remove_field">Remove</a></div>');
+                x++;
+                $(num_layers).val(x);
+            });
+            $(wrapper).on("click",".remove_field", function(ele) {
+                ele.preventDefault(); $(this).parent('div').remove(); x--; $(num_layers).val(x);
+            })
+        });
+    </script>
+    <div class="input_fields">
+        <button class="add_field_button" type="button">Add More Layer fields</button>
+        <div><input type="hidden" id="num_layers" name="num_layers" value="1"></div>
+        <div>Layer Name:<input type="text" name="layer0"> Layer Repository:<input type="text" name="lrepo0">Layer Branch:<input type="text" name="lbranch0"></div>
+
+    </div>
+
+
+
+
+
+
   {% for f in sch.all_fields %}
     {{ force_build_scheduler_parameter(f, authz, request, sch, default_props) }}
   {% endfor %}

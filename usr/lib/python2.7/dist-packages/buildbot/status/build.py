@@ -51,6 +51,7 @@ class BuildStatus(styles.Versioned, properties.PropertiesMixin):
     text = []
     results = None
     slavename = "???"
+    build_output = None
 
     set_runtime_properties = True
 
@@ -471,6 +472,7 @@ class BuildStatus(styles.Versioned, properties.PropertiesMixin):
         result['sourceStamps'] = [ss.asDict() for ss in self.getSourceStamps()]
         result['reason'] = self.getReason()
         result['blame'] = self.getResponsibleUsers()
+        result['build_output'] = self.build_output
 
         # Transient
         result['properties'] = self.getProperties().asList()
