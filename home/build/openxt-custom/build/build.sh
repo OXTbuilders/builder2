@@ -127,6 +127,7 @@ IFS=$OFS
 
 # Now list the HEADS
 for i in /home/git/${BUILD_USER}/*.git; do
+    echo -n "`basename $i`:"
     cd $i
     git log -1 --pretty='tformat:%H'
     cd - > /dev/null
