@@ -27,15 +27,16 @@ BUILD_DIR=%BUILD_DIR%
 IP_C=%IP_C%
 SUBNET_PREFIX=%SUBNET_PREFIX%
 ALL_BUILDS_SUBDIR_NAME=%ALL_BUILDS_SUBDIR_NAME%
+BRANCH=%BRANCH%
 
 SBUILD="sbuild --purge-deps=never"
 
 # Build
 mkdir $BUILD_DIR
 cd $BUILD_DIR
-git clone https://github.com/OpenXT/pv-linux-drivers.git
-git clone https://github.com/OpenXT/v4v.git
-git clone https://github.com/OpenXT/xctools.git
+git clone -b $BRANCH https://github.com/OpenXT/pv-linux-drivers.git
+git clone -b $BRANCH https://github.com/OpenXT/v4v.git
+git clone -b $BRANCH https://github.com/OpenXT/xctools.git
 cp -r v4v/v4v/linux v4v/libv4v/src/
 cp -r v4v/v4v/include/xen v4v/libv4v/src/
 mkdir all
