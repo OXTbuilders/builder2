@@ -30,6 +30,7 @@ ALL_BUILDS_SUBDIR_NAME=%ALL_BUILDS_SUBDIR_NAME%
 BUILDID=%BUILDID%
 BRANCH=%BRANCH%
 LAYERS=%LAYERS%
+DISTRO=%DISTRO%
 
 mkdir $BUILD_DIR
 cd $BUILD_DIR
@@ -47,6 +48,11 @@ REPO_DEV_CACERT="/home/build/certs/dev-cacert.pem"
 REPO_DEV_SIGNING_CERT="/home/build/certs/dev-cacert.pem"
 REPO_DEV_SIGNING_KEY="/home/build/certs/dev-cakey.pem"
 EOF
+
+# Handle distro
+if [[ $DISTRO != 'None' ]]; then
+    sed -i "s/DISTRO *=.*/DISTRO = \"${DISTRO}\"/" build/conf/local.conf-dist
+fi
 
 # Handle layers
 if [[ $LAYERS != 'None' ]]; then

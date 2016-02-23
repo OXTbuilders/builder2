@@ -42,6 +42,7 @@ BRANCH=$2
 LAYERS=$3
 OVERRIDES=$4
 ISSUE=$5
+DISTRO=$6
 
 BUILD_USER="$(whoami)"
 BUILD_USER_ID="$(id -u ${BUILD_USER})"
@@ -185,6 +186,7 @@ build_container() {
             -e "s|\%BUILDID\%|${BUILDID}|" \
             -e "s|\%BRANCH\%|${BRANCH}|" \
             -e "s|\%LAYERS\%|${LAYERS}|" \
+            -e "s|\%DISTRO\%|${DISTRO}|" \
             -e "s|\%ALL_BUILDS_SUBDIR_NAME\%|${ALL_BUILDS_SUBDIR_NAME}|" |\
         ssh -t -t -i "${BUILD_USER_HOME}"/ssh-key/openxt \
             -oStrictHostKeyChecking=no build@${CONTAINER_IP}
