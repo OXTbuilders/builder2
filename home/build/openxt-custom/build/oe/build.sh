@@ -91,6 +91,11 @@ fi
 
 ./do_build.sh -i $BUILDID | tee build.log
 
+# Build the tools and the extra packages
+./do_build.sh -i $BUILDID -s xctools,ship,extra_pkgs
+
+# TODO: figure out `do_build.sh -s packages_tree`, which probably requires fixing the step first...
+
 # Copy the build output
 scp -r build-output/* "${BUILD_USER}@${SUBNET_PREFIX}.${IP_C}.1:${ALL_BUILDS_SUBDIR_NAME}/${BUILD_DIR}/"
 
