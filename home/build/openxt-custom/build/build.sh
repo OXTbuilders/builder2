@@ -198,8 +198,8 @@ build_container "03" "centos"
 
 # Put everything in the OE directory, like it was before
 #   to avoid having to change recipes like the opkg repos one
-mv ${BUILD_DIR_PATH}/debian ${BUILD_DIR_PATH}/oxt-dev-*
-mv ${BUILD_DIR_PATH}/rpms ${BUILD_DIR_PATH}/oxt-dev-*
+mv ${BUILD_DIR_PATH}/debian ${BUILD_DIR_PATH}/custom-dev-*
+mv ${BUILD_DIR_PATH}/rpms ${BUILD_DIR_PATH}/custom-dev-*
 
-rsync -a ${BUILD_DIR_PATH}/oxt-dev-* builds@158.69.227.117:/home/builds/builds/${BRANCH}
+rsync -a ${BUILD_DIR_PATH}/custom-dev-* builds@158.69.227.117:/home/builds/builds/${BRANCH}
 rm -rf $BUILD_DIR_PATH
