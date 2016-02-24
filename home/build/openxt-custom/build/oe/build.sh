@@ -38,20 +38,34 @@ cd $BUILD_DIR
 git clone -b $BRANCH git://${SUBNET_PREFIX}.${IP_C}.1/${BUILD_USER}/openxt.git
 
 cd openxt
+
+# Get the latest Windows tools for the branch
+mkdir wintools
+rsync -r builds@158.69.227.117:/home/builds/win/$BRANCH/ wintools/
+WINTOOLS="`pwd`/wintools"
+WINTOOLS_ID="`grep -o '[0-9]*' wintools/BUILD_ID`"
+
 cp example-config .config
 cat >>.config <<EOF
 BRANCH="${BRANCH}"
+NAME_SITE="oxt"
+OPENXT_MIRROR="http://158.69.227.117/mirror"
+OE_TARBALL_MIRROR="http://158.69.227.117/mirror"
 OPENXT_GIT_MIRROR="${SUBNET_PREFIX}.${IP_C}.1/${BUILD_USER}"
 OPENXT_GIT_PROTOCOL="git"
 REPO_PROD_CACERT="/home/build/certs/prod-cacert.pem"
 REPO_DEV_CACERT="/home/build/certs/dev-cacert.pem"
 REPO_DEV_SIGNING_CERT="/home/build/certs/dev-cacert.pem"
 REPO_DEV_SIGNING_KEY="/home/build/certs/dev-cakey.pem"
+WIN_BUILD_OUTPUT="$WINTOOLS"
+XC_TOOLS_BUILD=$WINTOOLS_ID
+SYNC_CACHE_OE=builds@158.69.227.117:/home/builds/oe
+NETBOOT_HTTP_URL=http://158.69.227.117/builds
 EOF
 
 # Handle distro
 if [[ $DISTRO != 'None' ]]; then
-    sed -i "s/DISTRO *=.*/DISTRO = \"${DISTRO}\"/" build/conf/local.conf-dist
+    sed -i "s/^DISTRO *=.*/DISTRO = \"${DISTRO}\"/" build/conf/local.conf-dist
 fi
 
 # Handle layers
