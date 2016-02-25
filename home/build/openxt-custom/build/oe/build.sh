@@ -91,8 +91,12 @@ fi
 
 ./do_build.sh -i $BUILDID | tee build.log
 
+# The return value of `do_build.sh` got hidden by `tee`. Bring it back.
+ret=${PIPESTATUS[0]}
+( exit $ret )
+
 # Build the tools and the extra packages
-./do_build.sh -i $BUILDID -s xctools,ship,extra_pkgs
+./do_build.sh -i $BUILDID -s xctools,ship #,extra_pkgs
 
 # TODO: figure out `do_build.sh -s packages_tree`, which probably requires fixing the step first...
 
