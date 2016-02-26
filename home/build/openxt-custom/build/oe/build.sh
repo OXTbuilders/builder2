@@ -89,6 +89,8 @@ if [[ $LAYERS != 'None' ]]; then
     IFS=$OIFS
 fi
 
+./do_build.sh -i $BUILDID -s setupoe,sync_cache
+
 ./do_build.sh -i $BUILDID | tee build.log
 
 # The return value of `do_build.sh` got hidden by `tee`. Bring it back.
