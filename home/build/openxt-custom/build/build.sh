@@ -148,8 +148,10 @@ build_container() {
     echo "Building container: ${NUMBER} : ${NAME}"
 
     # Start the OE container
-    sudo lxc-info -n ${BUILD_USER}-${NAME} | \
-        grep STOPPED >/dev/null && sudo lxc-start -d -n ${BUILD_USER}-${NAME}
+    # The containers are auto-started, and sudo requires a password,
+    #   so the following lines don't do anything. Commenting out.
+#    sudo lxc-info -n ${BUILD_USER}-${NAME} | \
+#        grep STOPPED >/dev/null && sudo lxc-start -d -n ${BUILD_USER}-${NAME}
 
     CONTAINER_IP="${SUBNET_PREFIX}.${IP_C}.1${NUMBER}"
     echo "Accessing container at network address: ${CONTAINER_IP}"
