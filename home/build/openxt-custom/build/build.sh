@@ -118,7 +118,7 @@ else
 fi
 OFS=$IFS
 IFS=','
-[ $OVERRIDES != "None" ] && do_overrides
+[ "$OVERRIDES" != "None" ] && do_overrides
 IFS=$OFS
 
 # Now list the HEADS
