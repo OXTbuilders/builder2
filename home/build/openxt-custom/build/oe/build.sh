@@ -98,13 +98,11 @@ ret=${PIPESTATUS[0]}
 ( exit $ret )
 
 # Build the tools and the extra packages
-./do_build.sh -i $BUILDID -s xctools,ship,extra_pkgs #,packages_tree
+./do_build.sh -i $BUILDID -s xctools,ship,extra_pkgs,packages_tree
 
 # Copy the build output
 BUILD_NAME=custom-dev-${BUILDID}-${BRANCH}
-mkdir build-output/${BUILD_NAME}/packages
 scp -r build-output/${BUILD_NAME} "${BUILD_USER}@${SUBNET_PREFIX}.${IP_C}.1:${ALL_BUILDS_SUBDIR_NAME}/${BUILD_DIR}/"
-scp -r build/tmp-glibc/deploy/ipk "${BUILD_USER}@${SUBNET_PREFIX}.${IP_C}.1:${ALL_BUILDS_SUBDIR_NAME}/${BUILD_DIR}/${BUILD_NAME}/packages"
 
 # The script may run in an "ssh -t -t" environment, that won't exit on its own
 set +e
