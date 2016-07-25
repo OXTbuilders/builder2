@@ -99,8 +99,8 @@ if ! mkdir -p "${BUILD_DIR_PATH}" ; then
 fi
 
 # Reset git mirrors to stock, to revert overrides
-mkdir git.old
-mv /home/git/${BUILD_USER}/*.git git.old
+mkdir -p git.old
+mv /home/git/${BUILD_USER}/*.git git.old || true
 for repo in `ls git.old`; do
     git clone --mirror git://github.com/openxt/$repo /home/git/${BUILD_USER}/$repo
 done
@@ -125,7 +125,7 @@ IFS=$OFS
 for i in /home/git/${BUILD_USER}/*.git; do
     echo -n "`basename $i`:"
     cd $i
-    git log -1 --pretty='tformat:%H'
+    git log $BRANCH -1 --pretty='tformat:%H'
     cd - > /dev/null
 done | tee ${BUILD_DIR_PATH}/git_heads
 
