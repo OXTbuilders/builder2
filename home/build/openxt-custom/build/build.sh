@@ -125,7 +125,7 @@ IFS=$OFS
 for i in /home/git/${BUILD_USER}/*.git; do
     echo -n "`basename $i`:"
     cd $i
-    git log $BRANCH -1 --pretty='tformat:%H'
+    git log $BRANCH -1 --pretty='tformat:%H' || echo "No $BRANCH branch"
     cd - > /dev/null
 done | tee ${BUILD_DIR_PATH}/git_heads
 
