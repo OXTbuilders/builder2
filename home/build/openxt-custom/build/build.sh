@@ -99,12 +99,10 @@ if ! mkdir -p "${BUILD_DIR_PATH}" ; then
 fi
 
 # Reset git mirrors to stock, to revert overrides
-mkdir -p git.old
-mv /home/git/${BUILD_USER}/*.git git.old || true
-for repo in `ls git.old`; do
+rm -rf /home/git/${BUILD_USER}/*
+for repo in `cat all_repos`; do
     git clone --mirror git://github.com/openxt/$repo /home/git/${BUILD_USER}/$repo
 done
-rm -rf git.old
 
 # Handle overrides
 #   Note: It is against policy to set both $ISSUE and $OVERRIDES in the buildbot ui
@@ -190,7 +188,7 @@ build_container() {
             -e "s|\%LAYERS\%|${LAYERS}|" \
             -e "s|\%DISTRO\%|${DISTRO}|" \
             -e "s|\%ALL_BUILDS_SUBDIR_NAME\%|${ALL_BUILDS_SUBDIR_NAME}|" |\
-        ssh -t -t -i "${BUILD_USER_HOME}"/ssh-key/openxt \
+        ssh -i "${BUILD_USER_HOME}"/ssh-key/openxt \
             -oStrictHostKeyChecking=no build@${CONTAINER_IP}
 }
 
