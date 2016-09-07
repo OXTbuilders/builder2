@@ -50,7 +50,7 @@ cat >>.config <<EOF
 BRANCH="${BRANCH}"
 NAME_SITE="custom"
 OPENXT_MIRROR="http://158.69.227.117/mirror"
-OE_TARBALL_MIRROR="http://158.69.227.117/mirror"
+OE_TARBALL_MIRROR="http://158.69.227.117/mirror/"
 OPENXT_GIT_MIRROR="${SUBNET_PREFIX}.${IP_C}.1/${BUILD_USER}"
 OPENXT_GIT_PROTOCOL="git"
 REPO_PROD_CACERT="/home/build/certs/prod-cacert.pem"
