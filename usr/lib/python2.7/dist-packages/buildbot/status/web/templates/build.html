@@ -184,7 +184,11 @@ SourceStamps:
     {% if p.text %}
     <td><textarea readonly cols="{{p.cols}}" rows="{{p.rows}}">{{ p.text|e }}</textarea></td>
     {% else %}
-    <td>{{ p.value|e }}</td>
+      {% if "github.com/" in p.value and p.name != "repos" %}
+         <td>{{ "<a href=http://" + p.value.split(":", 1)[0] + "/" + p.name.split("url", 1)[0] + "/tree/" + p.value.split(":", 1)[1] + ">" + p.value + "</a>" }}</td>
+      {% else %}
+         <td>{{ p.value|e }}</td>
+      {% endif %}
     {% endif %}
   </tr>
   {% endif %}    
